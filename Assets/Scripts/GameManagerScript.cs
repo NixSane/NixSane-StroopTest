@@ -34,7 +34,8 @@ public class GameManagerScript : MonoBehaviour
     string[] colour_word = new string[4];
     Color[] colors = new Color[4];
 
-    public static int rounds = 5;
+    [Header("Number of rounds")]
+    public int rounds = 5;
     int current_round = 1;
     int last_round;
 
@@ -46,6 +47,8 @@ public class GameManagerScript : MonoBehaviour
         set { color_picked = value; }
     }
 
+
+    [Header("UI Canvases")]
     /// Different UI depending on states
     [SerializeField] GameObject main_menu;
     [SerializeField] GameObject play_menu;
@@ -133,7 +136,22 @@ public class GameManagerScript : MonoBehaviour
             color_picked = COLOR.NONE;
         }
 
+        // Check to see if the number of rounds if reached.
+        HasBeatenGame();
     }
+
+    bool HasBeatenGame()
+    {
+        if (current_round == rounds)
+        {
+            current_round = 0;
+            game_state = GAME_STATE.GAME_WON;
+            return true;
+        }
+
+        return false;
+    }
+
 
     /// <summary>
     /// Generate a random color and word.
