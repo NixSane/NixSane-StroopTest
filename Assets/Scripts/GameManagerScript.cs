@@ -54,6 +54,7 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] GameObject play_menu;
     [SerializeField] TextMeshProUGUI random_word;
     [SerializeField] TextMeshProUGUI timer_text;
+    [SerializeField] TextMeshProUGUI timer_finished_text;
 
     [SerializeField] GameObject game_win_menu;
     [SerializeField] GameObject game_over_menu;
@@ -146,6 +147,10 @@ public class GameManagerScript : MonoBehaviour
         {
             current_round = 0;
             game_state = GAME_STATE.GAME_WON;
+
+            float minutes = Mathf.FloorToInt(timer / 60f);
+            float seconds = Mathf.FloorToInt(timer % 60f);
+            timer_finished_text.text = "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
             return true;
         }
 
