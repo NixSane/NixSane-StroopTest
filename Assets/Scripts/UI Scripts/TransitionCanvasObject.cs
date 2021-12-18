@@ -13,10 +13,19 @@ using System.Collections;
 [CreateAssetMenu(fileName = "TransitionUIObject", menuName = "TransitionObject", order = 1)]
 public class TransitionCanvasObject : ScriptableObject
 {
+    public delegate void PerformTransition();
+    PerformTransition performTransition;
+
+
     GameObject last_state;
     GameObject next_state; // Track what the next state is
     public float duration = 2f; // Duration of the transition
     private IEnumerator coroutine;
+
+    public void AddTransition(PerformTransition transition)
+    {
+        performTransition += transition;
+    }
 
     /// <summary>
     /// Set the next state to active
@@ -40,9 +49,7 @@ public class TransitionCanvasObject : ScriptableObject
             {
                 last_state.SetActive(false);
             }
-
         }
-
     }
 
     /// <summary>
