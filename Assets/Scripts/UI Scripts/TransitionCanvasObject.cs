@@ -19,8 +19,10 @@ public class TransitionCanvasObject : ScriptableObject
 
     GameObject last_state;
     GameObject next_state; // Track what the next state is
-    public float duration = 2f; // Duration of the transition
-    private IEnumerator coroutine;
+
+    public float animation_duration = 2f; // Duration of animating transition
+    public float state_duration = 3f; // Duration of the actual transition
+
 
     public void AddTransition(PerformTransition transition)
     {

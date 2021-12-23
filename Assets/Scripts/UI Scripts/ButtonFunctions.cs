@@ -5,15 +5,22 @@ using UnityEngine;
 public class ButtonFunctions : MonoBehaviour
 {
     public GameManagerScript game_manager;
+    [SerializeField] GameStatesObject gameStates;
+
     ButtonFunctionTemplates button_functions;
+
+    public void ResetGame()
+    {
+        gameStates.ResetGameState();
+    }
 
     /// <summary>
     /// Set the current game state to Play_Mode
     /// </summary>
     public void SetToPlay()
     {
-        GameManagerScript.game_state = GAME_STATE.PLAY_MODE;
-        GameManagerScript.timer = 0f;
+        gameStates.game_state = GAME_STATE.PLAY_MODE;
+        gameStates.timer = 0f;
     }
 
     public void ExitGame()

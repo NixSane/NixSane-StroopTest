@@ -7,14 +7,15 @@ using UnityEngine.UI;
 public class ButtonFunctionTemplates : ScriptableObject
 {
     public GameManagerScript game_manager;
+    public GameStatesObject gameStates;
 
     /// <summary>
     /// Set the current game state to Play_Mode
     /// </summary>
     public void SetToPlay()
     {
-        GameManagerScript.game_state = GAME_STATE.PLAY_MODE;
-        GameManagerScript.timer = 0f;
+        gameStates.game_state = GAME_STATE.PLAY_MODE;
+        gameStates.timer = 0f;
     }
 
     public void ExitGame()

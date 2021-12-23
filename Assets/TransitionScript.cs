@@ -19,20 +19,17 @@ public class TransitionScript : MonoBehaviour
 
     void StartTransition()
     {
-        LeanTween.moveLocal(gameObject[0], end_position[0], transition_object.duration).setEaseInBounce();
+
+        for (int i = 0; i < gameObject.Length; i ++)
+        {
+            // LeanTween.moveLocal(gameObject[i], end_position[i] , transition_object.animation_duration).setEaseInOutBack();
+            gameObject[i].LeanMoveLocal(end_position[i], transition_object.animation_duration).setEaseInOutBack();
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //UI_elements = new UIPlacement[gameObject.Length];
-
-        //for (int i = 0; i < UI_elements.Length; i++)
-        //{
-        //    UI_elements[i].gameObject = gameObject[i];
-        //    UI_elements[i].end_position = end_position[i];
-        //}
-
         StartTransition();
     }
 

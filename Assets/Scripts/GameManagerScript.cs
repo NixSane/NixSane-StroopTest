@@ -9,14 +9,6 @@ using UnityEngine;
 using TMPro;
 
 
-public enum GAME_STATE
-{
-    MAIN_MENU = 0,
-    PLAY_MODE = 1,
-    GAME_WON = 2,
-    GAME_OVER = 3
-}
-
 public enum COLOR
 {
     RED,
@@ -28,8 +20,7 @@ public enum COLOR
 
 public class GameManagerScript : MonoBehaviour
 {
-    public static GAME_STATE game_state = GAME_STATE.MAIN_MENU;
-    public static float timer = 0f;
+    [SerializeField] GameStatesObject gameStates;
 
     string[] colour_word = new string[4];
     Color[] colors = new Color[4];
@@ -47,17 +38,17 @@ public class GameManagerScript : MonoBehaviour
         set { color_picked = value; }
     }
 
-
     [Header("UI Canvases")]
     /// Different UI depending on states
     [SerializeField] GameObject main_menu;
     [SerializeField] GameObject play_menu;
+    [SerializeField] GameObject game_win_menu;
+    [SerializeField] GameObject game_over_menu;
+
+    [Header("Text")]
     [SerializeField] TextMeshProUGUI random_word;
     [SerializeField] TextMeshProUGUI timer_text;
     [SerializeField] TextMeshProUGUI timer_finished_text;
-
-    [SerializeField] GameObject game_win_menu;
-    [SerializeField] GameObject game_over_menu;
 
 
     // Start is called before the first frame update
@@ -74,46 +65,33 @@ public class GameManagerScript : MonoBehaviour
         colors[1] = Color.blue;
         colors[2] = Color.green;
         colors[3] = Color.yellow;
-
-        main_menu.GetComponent<GameObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (game_state)
+        switch (gameStates.game_state)
         {
             case GAME_STATE.MAIN_MENU:
-                if (!main_menu.activeSelf)
+                if (gameStates.current_ui_state != main_menu)
                 {
-                    main_menu.SetActive(true);
+                    gameStates.setUIState(main_menu);
                 }
-                play_menu.SetActive(false);
-                game_win_menu.SetActive(false);
-                game_over_menu.SetActive(false);
                 break;
             case GAME_STATE.PLAY_MODE:
 
-                if (!play_menu.activeSelf)
-                    play_menu.SetActive(true);
+                if (gameStates.current_ui_state != play_menu)
+                    gameStates.setUIState(play_menu);
                 PlayModeUpdate();
-                main_menu.SetActive(false);
-                game_win_menu.SetActive(false);
-                game_over_menu.SetActive(false);
+
                 break;
             case GAME_STATE.GAME_WON:
-                if (!game_win_menu.activeSelf)
-                    game_win_menu.SetActive(true);
-                main_menu.SetActive(false);
-                play_menu.SetActive(false);
-                game_over_menu.SetActive(false);
+                if (gameStates.current_ui_state != game_win_menu)
+                    gameStates.setUIState(game_win_menu);
                 break;
             case GAME_STATE.GAME_OVER:
-                if (!game_over_menu.activeSelf)
-                    game_over_menu.SetActive(true);
-                main_menu.SetActive(false);
-                play_menu.SetActive(false);
-                game_win_menu.SetActive(false);
+                if (gameStates.current_ui_state != game_over_menu)
+                    gameStates.setUIState(game_over_menu);
                 break;
         }
     }
@@ -146,10 +124,10 @@ public class GameManagerScript : MonoBehaviour
         if (current_round == rounds)
         {
             current_round = 0;
-            game_state = GAME_STATE.GAME_WON;
+            gameStates.game_state = GAME_STATE.GAME_WON;
 
-            float minutes = Mathf.FloorToInt(timer / 60f);
-            float seconds = Mathf.FloorToInt(timer % 60f);
+            float minutes = Mathf.FloorToInt(gameStates.timer / 60f);
+            float seconds = Mathf.FloorToInt(gameStates.timer % 60f);
             timer_finished_text.text = "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
             return true;
         }
@@ -175,9 +153,9 @@ public class GameManagerScript : MonoBehaviour
     /// </summary>
     void DigitalTimer()
     {
-        timer += Time.deltaTime;
-        float minutes = Mathf.FloorToInt(timer / 60f);
-        float seconds = Mathf.FloorToInt(timer % 60f);
+        gameStates.timer += Time.deltaTime;
+        float minutes = Mathf.FloorToInt(gameStates.timer / 60f);
+        float seconds = Mathf.FloorToInt(gameStates.timer % 60f);
 
         timer_text.text = "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
     }

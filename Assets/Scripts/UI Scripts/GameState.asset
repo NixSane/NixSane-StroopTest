@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c5e4307e10a8240b62e1862d57ad2a, type: 3}
-  m_Name: TransitionUIObject
+  m_Script: {fileID: 11500000, guid: 9baec48e128befa4e9d32e63931f09f8, type: 3}
+  m_Name: GameState
   m_EditorClassIdentifier: 
-  animation_duration: 2
-  state_duration: 3
+  game_state: 0
+  timer: 0
