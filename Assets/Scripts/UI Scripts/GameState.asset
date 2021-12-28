@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   game_state: 0
   timer: 0
+  last_ui_state: {fileID: 0}
+  current_ui_state: {fileID: 0}

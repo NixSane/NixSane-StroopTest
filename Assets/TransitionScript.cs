@@ -13,17 +13,13 @@ public class TransitionScript : MonoBehaviour
 {
     public TransitionCanvasObject transition_object;
 
-    public GameObject[] gameObject;
-    public Vector3[] end_position;
-    UIPlacement[] UI_elements;
+    public RectTransform[] canvas_elements;
 
     void StartTransition()
     {
-
-        for (int i = 0; i < gameObject.Length; i ++)
+        for (int i = 0; i < canvas_elements.Length; i ++)
         {
-            // LeanTween.moveLocal(gameObject[i], end_position[i] , transition_object.animation_duration).setEaseInOutBack();
-            gameObject[i].LeanMoveLocal(end_position[i], transition_object.animation_duration).setEaseInOutBack();
+            LeanTween.move(canvas_elements[i], Vector2.zero, transition_object.animation_duration).setEaseInOutBack();
         }
     }
 
